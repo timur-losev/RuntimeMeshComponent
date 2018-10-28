@@ -15,8 +15,12 @@ ARuntimeMeshActor::ARuntimeMeshActor(const FObjectInitializer& ObjectInitializer
 	RuntimeMeshComponent = CreateDefaultSubobject<URuntimeMeshComponent>(TEXT("RuntimeMeshComponent0"));
 	RuntimeMeshComponent->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
 	RuntimeMeshComponent->Mobility = EComponentMobility::Static;
-	RuntimeMeshComponent->SetGenerateOverlapEvents(false);
 
+#if ENGINE_MAJOR_VERSION >= 4 && ENGINE_MINOR_VERSION >= 20
+	RuntimeMeshComponent->SetGenerateOverlapEvents(false);
+#else
+	RuntimeMeshComponent->bGenerateOverlapEvents = false;
+#endif
 	RootComponent = RuntimeMeshComponent;
 }
 
@@ -56,6 +60,8 @@ EComponentMobility::Type ARuntimeMeshActor::GetMobility()
 
 void ARuntimeMeshActor::OnConstruction(const FTransform& Transform)
 {
+	Super::OnConstruction(Transform);
+	
 	if (bRunGenerateMeshesOnConstruction)
 	{
 		GenerateMeshes();
@@ -64,6 +70,8 @@ void ARuntimeMeshActor::OnConstruction(const FTransform& Transform)
 
 void ARuntimeMeshActor::BeginPlay()
 {
+	Super::BeginPlay();
+	
 	bool bIsGameWorld = GetWorld() && GetWorld()->IsGameWorld() && !GetWorld()->IsPreviewWorld() && !GetWorld()->IsEditorWorld();
 
 	bool bHadSerializedMeshData = false;
@@ -72,7 +80,7 @@ void ARuntimeMeshActor::BeginPlay()
 		URuntimeMesh* Mesh = RuntimeMeshComponent->GetRuntimeMesh();
 		if (Mesh)
 		{
-			bHadSerializedMeshData = Mesh->HasSerializedMeshData();
+			bHadSerializedMeshData = Mesh->ShouldSerializeMeshData();
 		}
 	}
 
