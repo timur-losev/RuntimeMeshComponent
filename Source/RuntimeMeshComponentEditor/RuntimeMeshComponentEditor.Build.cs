@@ -10,7 +10,8 @@ public class RuntimeMeshComponentEditor : ModuleRules
 
         PublicIncludePaths.AddRange(
             new string[] {
-                "RuntimeMeshComponentEditor/Public"
+                "RuntimeMeshComponentEditor/Public",
+                "Editor/UnrealEd/"
 				// ... add public include paths required here ...
 			}
             );
@@ -27,7 +28,7 @@ public class RuntimeMeshComponentEditor : ModuleRules
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
-                "Core",
+                "Core"
 				// ... add other public dependencies that you statically link with here ...
                 
             }
@@ -54,6 +55,7 @@ public class RuntimeMeshComponentEditor : ModuleRules
                 "Projects",
                 "EditorStyle",
                 "InputCore",
+				"FBX",
 
                 "RuntimeMeshComponent",
             }

@@ -13,13 +13,18 @@
 #include "DetailWidgetRow.h"
 #include "RawMesh.h"
 
-#include "Input/SCheckBox.h"
-#include "Input/SComboBox.h"
+#include "Widgets/Input/SCheckBox.h"
+#include "Widgets/Input/SComboBox.h"
+
+#include "Private/FbxExporter.h"
 
 #define LOCTEXT_NAMESPACE "RuntimeMeshComponentDetails"
 
 TSharedRef<IDetailCustomization> FRuntimeMeshComponentDetails::MakeInstance()
 {
+	UnFbx::FFbxExporter* exp = UnFbx::FFbxExporter::GetInstance();
+	exp->CreateDocument();
+
 	return MakeShareable(new FRuntimeMeshComponentDetails);
 }
 
