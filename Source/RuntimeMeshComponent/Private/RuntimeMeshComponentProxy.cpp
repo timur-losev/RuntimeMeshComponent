@@ -87,7 +87,7 @@ void FRuntimeMeshComponentSceneProxy::CreateMeshBatch(FMeshBatch& MeshBatch, con
 	MeshBatch.bCanApplyViewModeOverrides = true;
 
 	FMeshBatchElement& BatchElement = MeshBatch.Elements[0];
-	BatchElement.PrimitiveUniformBufferResource = &GetUniformBuffer();
+	BatchElement.PrimitiveUniformBuffer = GetUniformBuffer();
 }
 
 void FRuntimeMeshComponentSceneProxy::DrawStaticElements(FStaticPrimitiveDrawInterface* PDI)
@@ -98,7 +98,7 @@ void FRuntimeMeshComponentSceneProxy::DrawStaticElements(FStaticPrimitiveDrawInt
 		if (SectionRenderData.Contains(SectionEntry.Key) && Section.IsValid() && Section->ShouldRender() && Section->WantsToRenderInStaticPath())
 		{
 			const FRuntimeMeshSectionRenderData& RenderData = SectionRenderData[SectionEntry.Key];
-			FMaterialRenderProxy* Material = RenderData.Material->GetRenderProxy(false);
+			FMaterialRenderProxy* Material = RenderData.Material->GetRenderProxy();
 
 			FMeshBatch MeshBatch;
 			CreateMeshBatch(MeshBatch, Section, RenderData, Material, nullptr);
@@ -116,7 +116,7 @@ void FRuntimeMeshComponentSceneProxy::GetDynamicMeshElements(const TArray<const 
 	if (bWireframe)
 	{
 		WireframeMaterialInstance = new FColoredMaterialRenderProxy(
-			GEngine->WireframeMaterial ? GEngine->WireframeMaterial->GetRenderProxy(IsSelected()) : nullptr,
+			GEngine->WireframeMaterial ? GEngine->WireframeMaterial->GetRenderProxy() : nullptr,
 			FLinearColor(0, 0.5f, 1.f)
 		);
 
@@ -139,7 +139,7 @@ void FRuntimeMeshComponentSceneProxy::GetDynamicMeshElements(const TArray<const 
 					if (bForceDynamicPath || !Section->WantsToRenderInStaticPath())
 					{
 						const FRuntimeMeshSectionRenderData& RenderData = SectionRenderData[SectionEntry.Key];
-						FMaterialRenderProxy* Material = RenderData.Material->GetRenderProxy(IsSelected());
+						FMaterialRenderProxy* Material = RenderData.Material->GetRenderProxy();
 
 						FMeshBatch& MeshBatch = Collector.AllocateMesh();
 						CreateMeshBatch(MeshBatch, Section, RenderData, Material, WireframeMaterialInstance);

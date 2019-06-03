@@ -239,7 +239,7 @@ void URuntimeMeshComponent::PostLoad()
 }
 
 
-#if ENGINE_MAJOR_VERSION == 4 && ENGINE_MINOR_VERSION < 21
+
 
 bool URuntimeMeshComponent::GetPhysicsTriMeshData(struct FTriMeshCollisionData* CollisionData, bool InUseAllTriData)
 {
@@ -262,6 +262,7 @@ bool URuntimeMeshComponent::ContainsPhysicsTriMeshData(bool InUseAllTriData) con
 	return false;
 }
 
+#if 0
 UBodySetup* URuntimeMeshComponent::CreateNewBodySetup()
 {
 	UBodySetup* NewBodySetup = NewObject<UBodySetup>(this, NAME_None, (IsTemplate() ? RF_Public : RF_NoFlags));
@@ -270,7 +271,7 @@ UBodySetup* URuntimeMeshComponent::CreateNewBodySetup()
 	return NewBodySetup;
 }
 
-void URuntimeMeshComponent::FinishPhysicsAsyncCook(UBodySetup* FinishedBodySetup)
+void URuntimeMeshComponent::FinishPhysicsAsyncCook(bool bSuccess, UBodySetup* FinishedBodySetup)
 {
 	//SCOPE_CYCLE_COUNTER(STAT_RuntimeMesh_AsyncCollisionFinish);
 	check(IsInGameThread());

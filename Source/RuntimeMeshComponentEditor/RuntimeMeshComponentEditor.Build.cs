@@ -44,7 +44,6 @@ public class RuntimeMeshComponentEditor : ModuleRules
                 "Slate",
                 "SlateCore",
                 "RenderCore",
-                "ShaderCore",
                 "RHI",
                 "UnrealEd",
                 "LevelEditor",
