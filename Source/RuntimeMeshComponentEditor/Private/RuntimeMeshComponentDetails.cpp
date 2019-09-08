@@ -16,7 +16,7 @@
 #include "Widgets/Input/SCheckBox.h"
 #include "Widgets/Input/SComboBox.h"
 
-#include "Private/FbxExporter.h"
+#include "Editor/UnrealEd/Private/FbxExporter.h"
 
 #define LOCTEXT_NAMESPACE "RuntimeMeshComponentDetails"
 

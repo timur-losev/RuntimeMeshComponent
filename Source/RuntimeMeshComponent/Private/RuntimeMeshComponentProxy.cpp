@@ -5,6 +5,8 @@
 #include "RuntimeMeshComponent.h"
 #include "RuntimeMeshProxy.h"
 #include "PhysicsEngine/BodySetup.h"
+#include "TessellationRendering.h"
+#include "PrimitiveSceneProxy.h"
 
 FRuntimeMeshComponentSceneProxy::FRuntimeMeshComponentSceneProxy(URuntimeMeshComponent* Component) 
 	: FPrimitiveSceneProxy(Component)
@@ -86,8 +88,8 @@ void FRuntimeMeshComponentSceneProxy::CreateMeshBatch(FMeshBatch& MeshBatch, con
 	MeshBatch.ReverseCulling = IsLocalToWorldDeterminantNegative();
 	MeshBatch.bCanApplyViewModeOverrides = true;
 
-	FMeshBatchElement& BatchElement = MeshBatch.Elements[0];
-	BatchElement.PrimitiveUniformBuffer = GetUniformBuffer();
+	//HORU: 4.22 compat
+	//FMeshBatchElement& BatchElement = MeshBatch.Elements[0];
 }
 
 void FRuntimeMeshComponentSceneProxy::DrawStaticElements(FStaticPrimitiveDrawInterface* PDI)
@@ -152,7 +154,7 @@ void FRuntimeMeshComponentSceneProxy::GetDynamicMeshElements(const TArray<const 
 	}
 
 	// Draw bounds
-#if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
+#if RUNTIMEMESH_ENABLE_DEBUG_RENDERING
 	for (int32 ViewIndex = 0; ViewIndex < Views.Num(); ViewIndex++)
 	{
 		if (VisibilityMap & (1 << ViewIndex))
