@@ -4,7 +4,7 @@
 #include "RuntimeMeshComponentPlugin.h"
 #include "PhysicsEngine/BodySetup.h"
 #include "PhysicsEngine/PhysicsSettings.h"
-#include "Physics/IPhysXCookingModule.h"
+#include "PhysicsCore/Public/IPhysXCookingModule.h"
 #include "RuntimeMeshCore.h"
 #include "RuntimeMeshGenericVertex.h"
 #include "RuntimeMeshUpdateCommands.h"
